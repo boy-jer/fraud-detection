@@ -1,14 +1,9 @@
 # My basic thinking on this:
-# Within each deal, digest each flattened address and see if its a repeat,
-# the same with email addresses.
+# Within each deal, put the flattened addresses in emails in a hash 
+# and check for repeats
 # 
-# Not worried about collisions, because we still check the matches.
-# 
-# Oh also I'm re-learning ruby at the same time I'm doing this coding challenge.  
+# Oh, I'm re-learning ruby at the same time I'm doing this coding challenge.  
 # Trying to call two birds with one stone.  Yeah...
-
-
-require 'zlib'
 
 $deals = Array.new
 $fraud_list = Array.new
@@ -143,6 +138,7 @@ class Record
 end
 
 def check
+	#store the record count, not that we need it for anything
 	count = STDIN.gets
 
 	#repeatedly get new record lines
@@ -158,24 +154,26 @@ def check
 		zip			= line[6]
 		cc			= line[7]
 		
+		#convert these to integers so we can use them as indices
 		order = order.to_i
 		deal = deal.to_i
 		
+		#flatten things and lowercase
 		email = flatten_email(email)	
 		street = flatten_street(street)
 		city = city.downcase!
 		state = flatten_state(state)	
 			
+		#create a record object
 		record = Record.new(order, deal, email, street+city+state+zip, cc)
 		
-		address_crc = Zlib::crc32( street + city + state + zip )	
-		email_crc = Zlib::crc32( email )
-		
+		address_crc = street + city + state + zip
+				
 		if $deals.fetch(deal, nil).nil?
 			$deals[deal] = Deal.new(order)		
 		end
 		
-		$deals[deal].add_record(record, address_crc, email_crc)	
+		$deals[deal].add_record(record, address, email_crc)	
 	end
 	
 	puts $fraud_list.join(',')
