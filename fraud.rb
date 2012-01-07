@@ -17,7 +17,7 @@ def flatten_email(email)
 	
 	#remove +postfix
 	if plus_pos = e.index('+')				
-		e.slice!(0, plus_pos)
+		e = e.slice(0, plus_pos)
 	end
 		
 	#remove periods from account part
@@ -41,8 +41,8 @@ def flatten_street(street)
 	s = street.downcase
 
 	#road abbreviation insensitive
-	s.sub!("road", 'rd')
-	s.sub!("street", 'st')
+	s.sub!("road", 'rd.')
+	s.sub!("street", 'st.')
 	
 	#return
 	s	
@@ -179,4 +179,4 @@ def check
 	puts $fraud_list.join(',')
 end
 
-check
+#check
