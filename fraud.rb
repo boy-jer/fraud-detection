@@ -93,33 +93,33 @@ class Deal
 
 	def initialize(deal)
 		@records = Hash.new			# key: order id. value: record
-		@haddresses = Hash.new 	# key: crc of address and deal. value: order id
-		@hemails = Hash.new 		# key: crc of email and deal. value: order id
+		@haddresses = Hash.new 	# key: address. value: order id
+		@hemails = Hash.new 		# key: email. value: order id
 	
 		@deal = deal						# deal id
 	end
 	
-	def add_record(record, address_crc, email_crc)
+	def add_record(record, address, email)
 		@records[record.order] = record
 				
-		#add crc to address hash map or check fraud
-		if matched_order = @haddresses.fetch(address_crc, false)
-			#collision, check for fraud
+		#add address to hash map or check fraud
+		if matched_order = @haddresses.fetch(address, false)
+			#match, check for fraud
 			if records_fraudulent?( @records[matched_order], record)	
 				$fraud_list << matched_order << record.order
 			end
 		else	
-			@haddresses[address_crc] = record.order
+			@haddresses[address] = record.order
 		end
 		
-		#add crc to email hash map or check fraud
-		if matched_order = @hemails.fetch(email_crc, false)
-			#collision, check for fraud			
+		#add email to hash map or check fraud
+		if matched_order = @hemails.fetch(email, false)
+			#match, check for fraud			
 			if records_fraudulent?( @records[matched_order], record)
 				$fraud_list << matched_order << record.order
 			end
 		else	
-			@hemails[email_crc] = record.order
+			@hemails[email] = record.order
 		end
 		
 	end
@@ -162,18 +162,18 @@ def check
 		email = flatten_email(email)	
 		street = flatten_street(street)
 		city = city.downcase!
-		state = flatten_state(state)	
-			
-		#create a record object
-		record = Record.new(order, deal, email, street+city+state+zip, cc)
+		state = flatten_state(state)
 		
-		address_crc = street + city + state + zip
-				
+		address = street + city + state + zip
+		
+		#create a record object
+		record = Record.new(order, deal, email, address, cc)
+						
 		if $deals.fetch(deal, nil).nil?
 			$deals[deal] = Deal.new(order)		
 		end
 		
-		$deals[deal].add_record(record, address, email_crc)	
+		$deals[deal].add_record(record, address, email)	
 	end
 	
 	puts $fraud_list.join(',')
