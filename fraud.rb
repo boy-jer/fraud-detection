@@ -176,7 +176,7 @@ def check
 		$deals[deal].add_record(record, address, email)	
 	end
 	
-	puts $fraud_list.join(',')
+	puts $fraud_list.uniq.sort.join(',')
 end
 
-#check
+check
