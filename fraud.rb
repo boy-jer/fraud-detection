@@ -92,11 +92,11 @@ class Deal
 	attr_accessor :deal, :records, :haddresses, :hemails
 
 	def initialize(deal)
-		@records = Hash.new			# key: order id. value: record
-		@haddresses = Hash.new 	# key: address. value: order id
-		@hemails = Hash.new 		# key: email. value: order id
+		@records = Hash.new	# key: order id. value: record
+		@haddresses = Hash.new # key: address. value: order id
+		@hemails = Hash.new # key: email. value: order id
 	
-		@deal = deal						# deal id
+		@deal = deal	# deal id
 	end
 	
 	def add_record(record, address, email)
