@@ -1,6 +1,6 @@
 # My basic thinking on this:
-# Within each deal, put the flattened addresses in emails in a hash 
-# and check for repeats
+# Within each deal, put the flattened addresses and emails in hash maps
+# and check for repeats.
 # 
 # Oh, I'm re-learning ruby at the same time I'm doing this coding challenge.  
 # Trying to call two birds with one stone.  Yeah...
