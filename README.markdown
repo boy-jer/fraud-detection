@@ -2,14 +2,14 @@ At Groupon we need to take steps to detect and prevent fraudulent purchases. One
 
 An order is considered fraudulent if any of the following conditions apply:
 
-    Two orders have the same email address and deal id, but different credit card information, regardless of street address.
-    Two orders have the same Address/City/State/Zip and deal id, but different credit card information, regardless of email address.
+Two orders have the same email address and deal id, but different credit card information, regardless of street address.
+Two orders have the same Address/City/State/Zip and deal id, but different credit card information, regardless of email address.
 
 Remember, people are tricky and are actively trying to get past this fraud detector. Your code must be able to handle the following tricks:
 
-    Email and addresses are case insensitive: `bugs@bunny.com` is the same as `BuGS@BuNNy.COM` and `123 Sesame St.` is the same as `123 SeSAME st.`.
-    The username portion of an email address can have ignored characters. A `.` in an email is flat out ignored, so `bugs1@bunny.com`, and `bugs.1@bunny.com` are the same email address. A `+` in an email means the plus and everything after is ignored, so `bugs@bunny.com` and `bugs+10@bunny.com` are the same email address.
-    Street addresses often have abbreviated words. `123 Sesame St.` and `123 Sesame Street` are the same address. `IL` and `Illinois` are the same state. For the purposes of not making this a typing problem, you can assume that the only abbreviated words you need to worry about are Street/St. and Road/Rd. and the only states you need to worry about our IL, CA, and NY.
+Email and addresses are case insensitive: `bugs@bunny.com` is the same as `BuGS@BuNNy.COM` and `123 Sesame St.` is the same as `123 SeSAME st.`.
+The username portion of an email address can have ignored characters. A `.` in an email is flat out ignored, so `bugs1@bunny.com`, and `bugs.1@bunny.com` are the same email address. A `+` in an email means the plus and everything after is ignored, so `bugs@bunny.com` and `bugs+10@bunny.com` are the same email address.
+Street addresses often have abbreviated words. `123 Sesame St.` and `123 Sesame Street` are the same address. `IL` and `Illinois` are the same state. For the purposes of not making this a typing problem, you can assume that the only abbreviated words you need to worry about are Street/St. and Road/Rd. and the only states you need to worry about our IL, CA, and NY.
 
 We need this detection code to run quickly. The input file will be large enough so that it will behoove you to make your code as fast as possible. That said, please remember that this fraud system is part of a larger system and one that might change over time, and we expect the structure of your code to reflect that fact.
 
